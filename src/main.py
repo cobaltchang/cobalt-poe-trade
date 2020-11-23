@@ -1,6 +1,7 @@
-from controller import Controller
+from controller import TkinterController
 from model import Model
 
+
 m = Model()
-c = Controller(m)
+c = TkinterController(m)
 c.run()

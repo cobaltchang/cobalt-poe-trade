@@ -1,8 +1,9 @@
 import time
+import tkinter as Tk
 
 import clipboard
 
-from view import View
+from view import TkinterView, View
 
 
 class Controller:
@@ -26,3 +27,21 @@ class Controller:
         if copied:
             if copied.startswith('Rarity: ') and '--------' in copied:
                 return True
+
+
+class TkinterController(Controller):
+
+    def __init__(self, model):
+        self.model = model
+        self.view = TkinterView(self, self.model)
+
+        self.window = Tk.Tk()
+        self.view.initialize(self.window)
+
+    def run(self):
+        self.window.after(1000, self.detect_copied)
+        self.window.mainloop()
+
+    def detect_copied(self):
+        super().detect_copied()
+        self.window.after(1000, self.detect_copied)
